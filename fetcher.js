@@ -1,6 +1,11 @@
 const request = require('request');
 const fs = require('fs');
-const rl = require('readline');
+const readline = require('readline');
+
+const rl = readline.createInterface( {
+  input: process.stdin,
+  output: process.stdout
+})
 
 const url = process.argv[2];
 const path = process.argv[3];
@@ -38,9 +43,15 @@ const checkFile = (filePath, callback) => {
   fs.access(filePath, (err) => {
     //If no error, that means the file exists.
     if (!err) {
-      //Ask user if they want to overwrite
-      console.log("File already exists!");
-      callback();
+      //Ask permission to overwrite
+      rl.question("File already exists! Do you want to overwrite the file? Y/N ", answer => {
+        if (answer.toLowerCase() === "y") {
+          callback();
+        } else if (answer.toLowerCase() === "n") {
+          console.log("No write operation performed.");
+        }
+        rl.close();
+      });
     } else {
       //Write it
       callback();
