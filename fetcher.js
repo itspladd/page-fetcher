@@ -11,5 +11,9 @@ request(url, (error, response, body) => {
   console.log("*******************");
   //console.log(response);
   console.log("*******************");
-  fs.writeFile("./index.html", body, () => console.log("Done!"));
+  fs.writeFile(path, body, () => {
+    fs.stat(path, (err, stats) => {
+      console.log(`Wrote ${stats.size} bytes to ${path}.`);
+    });
+  });
 });
