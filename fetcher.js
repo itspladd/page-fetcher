@@ -44,14 +44,19 @@ const checkFile = (filePath, callback) => {
     //If no error, that means the file exists.
     if (!err) {
       //Ask permission to overwrite
+      let ans = "";
       rl.question("File already exists! Do you want to overwrite the file? Y/N ", answer => {
-        if (answer.toLowerCase() === "y") {
+        ans = answer.toLowerCase();
+        if (ans === "y") {
           callback();
-        } else if (answer.toLowerCase() === "n") {
+        } else if (ans === "n") {
           console.log("No write operation performed.");
+        } else {
+          console.log("Invalid input. No operation performed.");
         }
         rl.close();
-      });
+      });      
+
     } else {
       //Write it
       callback();
