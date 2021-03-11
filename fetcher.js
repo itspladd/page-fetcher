@@ -11,5 +11,5 @@ request(url, (error, response, body) => {
   console.log("*******************");
   //console.log(response);
   console.log("*******************");
-  console.log(body)
+  fs.writeFile("./index.html", body, () => console.log("Done!"));
 });
